@@ -1,4 +1,4 @@
-package project.hadler;
+package project.handler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

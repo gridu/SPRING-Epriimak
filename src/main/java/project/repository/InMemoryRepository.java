@@ -1,11 +1,12 @@
 package project.repository;
 
-import project.entity.Person;
 import project.exception.NoSuchDataException;
+import project.model.Person;
 
 import java.util.List;
 
 public interface InMemoryRepository {
+
     List<Person> findAllPersons();
 
     Person findPerson(String name);

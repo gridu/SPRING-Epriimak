@@ -4,9 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import project.entity.Person;
+import project.model.Person;
 import project.repository.InMemoryRepository;
-import project.repository.InMemoryRepositoryIml;
+import project.repository.InMemoryRepositoryImpl;
+import project.service.PhoneBookService;
+import project.service.PhoneBookServiceImpl;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,7 +20,7 @@ import java.util.List;
 @ComponentScan(basePackages = "project")
 public class AppConfig {
 
-    @Bean
+    @Bean(name = "default_data")
     public List<Person> defaultData() {
         List<Person> data = new LinkedList<>();
         data.add(new Person("Alex", "+111"));
@@ -27,8 +29,13 @@ public class AppConfig {
         return data;
     }
 
-    @Bean(name = "repository")
-    public InMemoryRepository inMemoryRepository(List<Person> defaultData) {
-        return new InMemoryRepositoryIml(defaultData);
-    }
+    /*@Bean(name = "repository")
+    public InMemoryRepository getInMemoryRepository(List<Person> personData) {
+        return new InMemoryRepositoryImpl(personData);
+    }*/
+
+    /*@Bean(name = "service")
+    public PhoneBookService getPhoneBookService() {
+        return new PhoneBookServiceImpl(getInMemoryRepository(defaultData()));
+    }*/
 }

@@ -1,27 +1,27 @@
 package project.repository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-import project.entity.Person;
 import project.exception.NoSuchDataException;
+import project.model.Person;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Repository
-public class InMemoryRepositoryIml implements InMemoryRepository {
+@Repository("repository")
+public class InMemoryRepositoryImpl implements InMemoryRepository {
 
     private List<Person> data;
 
-    public InMemoryRepositoryIml() {
-        this.data = new LinkedList<>();
-    }
-
-    public InMemoryRepositoryIml(List<Person> data) {
-        this.data = new LinkedList<>(data);
+    public InMemoryRepositoryImpl(@Qualifier("default_data") List<Person> data) {
+        this.data = data;
     }
 
     @Override
     public List<Person> findAllPersons() {
-        return new LinkedList<>(this.data);
+        return data;
     }
 
     @Override

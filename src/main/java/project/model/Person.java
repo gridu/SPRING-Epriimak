@@ -1,4 +1,4 @@
-package project.entity;
+package project.model;
 
 import java.util.Arrays;
 import java.util.HashSet;

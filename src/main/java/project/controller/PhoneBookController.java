@@ -1,9 +1,10 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import project.entity.Person;
 import project.exception.NoSuchDataException;
+import project.model.Person;
 import project.service.PhoneBookService;
 
 import java.util.List;
@@ -16,12 +17,12 @@ public class PhoneBookController {
 
     private final PhoneBookService phoneBook;
 
-    public PhoneBookController(PhoneBookService phoneBook) {
+    public PhoneBookController(@Qualifier("service") PhoneBookService phoneBook) {
         this.phoneBook = phoneBook;
     }
 
     @GetMapping(value = "")
-    public String message() {//REST Endpoint.
+    public String message() {
         return "Welcome!";
     }
 

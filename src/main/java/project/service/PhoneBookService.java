@@ -1,37 +1,17 @@
 package project.service;
 
-
-import org.springframework.stereotype.Service;
-import project.entity.Person;
 import project.exception.NoSuchDataException;
-import project.repository.InMemoryRepository;
+import project.model.Person;
 
 import java.util.List;
 
+public interface PhoneBookService {
 
-@Service
-public class PhoneBookService {
+    List<Person> findAllPersons();
 
-    private final InMemoryRepository repository;
+    Person addPersonInfo(String name, String phone);
 
-    public PhoneBookService(InMemoryRepository repository) {
-        this.repository = repository;
-    }
+    Person findPersonByName(String name);
 
-    public List<Person> findAllPersons() {
-        return repository.findAllPersons();
-    }
-
-    public Person addPersonInfo(String name, String phone) {
-        return repository.addPerson(name, phone);
-    }
-
-    public Person findPersonByName(String name) {
-        return repository.findPerson(name);
-    }
-
-    public String removePersonByName(String name) throws NoSuchDataException {
-        repository.removePerson(name);
-        return "{}";
-    }
+    String removePersonByName(String name) throws NoSuchDataException;
 }

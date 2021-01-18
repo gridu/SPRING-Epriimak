@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import project.config.AppConfig;
 import project.config.WebInitializer;
 import project.controller.PhoneBookController;
-import project.entity.Person;
+import project.model.Person;
 import project.exception.NoSuchDataException;
-import project.service.PhoneBookService;
+import project.service.PhoneBookServiceImpl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,13 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {WebInitializer.class, AppConfig.class})
 @WebMvcTest(PhoneBookController.class)
-public class PhoneBookServiceTest {
+public class PhoneBookServiceImplTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private PhoneBookService phoneBookMock;
+    private PhoneBookServiceImpl phoneBookMock;
 
     @Test
     public void findAllPersonsAndGetOkStatus() throws Exception {
