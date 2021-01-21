@@ -19,17 +19,14 @@ public class InMemoryRepositoryImpl implements InMemoryRepository {
         this.data = data;
     }
 
-    @Override
     public List<Person> findAllPersons() {
         return data;
     }
 
-    @Override
     public Person findPerson(String name) {
         return data.stream().filter(person -> person.getName().equals(name)).findFirst().orElseGet(Person::new);
     }
 
-    @Override
     public Person addPerson(String name, String phone) {
         Person person;
         if (data.stream().anyMatch(p -> p.getName().equals(name))) {
@@ -45,7 +42,6 @@ public class InMemoryRepositoryImpl implements InMemoryRepository {
         return person;
     }
 
-    @Override
     public void removePerson(String name) throws NoSuchDataException {
         if (data.stream().noneMatch(person -> person.getName().equals(name))) {
             throw new NoSuchDataException("Record with name: " + name + " not exists");
