@@ -1,15 +1,15 @@
-#Phonebook
+# Phonebook
 
 The application provides ability to create phonebook. \
 Each phonebook record contains person's name and set of his phone numbers (set used to avoid duplicates).  
 
-##Functionality
+## Functionality
 1. Create new phonebook record
 2. Add phone number for existed person's record
 3. Delete phonebook record
 4. Get list of phonebook records
 
-##How to run
+## How to run
 1. Clone project
 2. Open IntelliJ IDEA and "Project structure" section. In artifact section create "Web Application: exploded" artifact from *phoneBookREST* module 
 3. Create Tomcat project configuration: 
@@ -18,7 +18,7 @@ Each phonebook record contains person's name and set of his phone numbers (set u
 4. Run tuned configuration
 5. Server starts, welcome message will be on *http://localhost:8080/phoneBookREST/v1/customers*
 
-##How to use
+## How to use
 Make sure server is running on *localhost:8080*
 1. To create new record send POST request on *http://localhost:8080/phoneBookREST/v1/customers/addRecord* \
 using JSON body format: *{
@@ -32,7 +32,7 @@ If record with such name not exists exception will be thrown
 4. To get all records send GET request on *http://localhost:8080/phoneBookREST/v1/customers/getAllRecords* \
 To get record by specific name send GET request on *http://localhost:8080/phoneBookREST/v1/customers/getRecordByName/PERSON_NAME*
 
-##Running test
+## Running test
 Application contains some service tests. 
 For test run use this command: 
 ```mvn clean test```
