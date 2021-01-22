@@ -1,10 +1,10 @@
-package project.handler;
+package com.griddynamics.gridu.springta.phonebook.handler;
 
+import com.griddynamics.gridu.springta.phonebook.exception.NoSuchDataException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import project.exception.NoSuchDataException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,5 +21,4 @@ public class NoSuchDataExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("message", e.getMessage());
         return new ResponseEntity<>(body, INTERNAL_SERVER_ERROR);
     }
-
 }

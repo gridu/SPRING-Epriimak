@@ -1,4 +1,4 @@
-package project.config;
+package com.griddynamics.gridu.springta.phonebook.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

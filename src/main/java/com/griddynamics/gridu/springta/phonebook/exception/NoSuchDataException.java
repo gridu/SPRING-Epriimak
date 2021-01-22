@@ -1,4 +1,4 @@
-package project.exception;
+package com.griddynamics.gridu.springta.phonebook.exception;
 
 public class NoSuchDataException extends Exception {
 

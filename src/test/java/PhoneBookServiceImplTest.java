@@ -1,4 +1,10 @@
 import com.google.gson.Gson;
+import com.griddynamics.gridu.springta.phonebook.config.AppConfig;
+import com.griddynamics.gridu.springta.phonebook.config.WebInitializer;
+import com.griddynamics.gridu.springta.phonebook.controller.PhoneBookController;
+import com.griddynamics.gridu.springta.phonebook.exception.NoSuchDataException;
+import com.griddynamics.gridu.springta.phonebook.model.Record;
+import com.griddynamics.gridu.springta.phonebook.service.PhoneBookServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -10,12 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import project.config.AppConfig;
-import project.config.WebInitializer;
-import project.controller.PhoneBookController;
-import project.model.Person;
-import project.exception.NoSuchDataException;
-import project.service.PhoneBookServiceImpl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,12 +38,12 @@ public class PhoneBookServiceImplTest {
     private PhoneBookServiceImpl phoneBookMock;
 
     @Test
-    public void findAllPersonsAndGetOkStatus() throws Exception {
-        List<Person> data = new LinkedList<>();
-        data.add(new Person("Ann", "333-33-33"));
-        data.add(new Person("Sam", "888-33-33"));
+    public void findAllRecordsAndGetOkStatus() throws Exception {
+        List<Record> data = new LinkedList<>();
+        data.add(new Record("Ann", "333-33-33"));
+        data.add(new Record("Sam", "888-33-33"));
 
-        BDDMockito.given(phoneBookMock.findAllPersons())
+        BDDMockito.given(phoneBookMock.findAllRecords())
                 .willReturn(data);
 
         mockMvc.perform(
@@ -56,13 +56,13 @@ public class PhoneBookServiceImplTest {
     }
 
     @Test
-    public void findPersonByExistedNameAndGetOkStatus() throws Exception {
+    public void findRecordByExistedNameAndGetOkStatus() throws Exception {
         String name = "Alexa";
         String phone = "555-55-55";
-        Person person = new Person(name, phone);
+        Record record = new Record(name, phone);
 
-        BDDMockito.given(phoneBookMock.findPersonByName(name))
-                .willReturn(person);
+        BDDMockito.given(phoneBookMock.findRecordByName(name))
+                .willReturn(record);
 
         mockMvc.perform(
                 get("/v1/customers/getRecordByName/{name}", name)
@@ -73,57 +73,57 @@ public class PhoneBookServiceImplTest {
     }
 
     @Test
-    public void findPersonByNotExistedNameAndGetOkStatus() throws Exception {
+    public void findRecordByNotExistedNameAndGetOkStatus() throws Exception {
         String name = "Ann";
-        Person emptyPerson = new Person();
+        Record emptyRecord = new Record();
 
-        BDDMockito.given(phoneBookMock.findPersonByName(name))
-                .willReturn(emptyPerson);
+        BDDMockito.given(phoneBookMock.findRecordByName(name))
+                .willReturn(emptyRecord);
 
         mockMvc.perform(
                 get("/v1/customers/getRecordByName/{name}", name)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("name").value(emptyPerson.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("phones").value(emptyPerson.getPhones()));
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value(emptyRecord.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("phones").value(emptyRecord.getPhones()));
     }
 
     @Test
-    public void addPersonInfoAndGetOkStatus() throws Exception {
+    public void addRecordAndGetOkStatus() throws Exception {
         String name = "Alexa";
         String phone = "++111-11-11";
-        Person person = new Person(name, phone);
+        Record record = new Record(name, phone);
 
         Map<String, String> body = new HashMap<>();
         body.put("name", name);
         body.put("phones", phone);
 
-        BDDMockito.given(phoneBookMock.addPersonInfo(name, phone))
-                .willReturn(person);
+        BDDMockito.given(phoneBookMock.addRecord(name, phone))
+                .willReturn(record);
 
         mockMvc.perform(post("/v1/customers/addRecord")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new Gson().toJson(body)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(new Gson().toJson(person)));
+                .andExpect(content().string(new Gson().toJson(record)));
     }
 
     @Test
-    public void removePersonByExistedNameAndGetOkStatus() throws Exception {
+    public void removeRecordByExistedNameAndGetOkStatus() throws Exception {
         String name = "Alexa";
 
-        BDDMockito.given(phoneBookMock.removePersonByName(name))
-                .willReturn("{}");
+        BDDMockito.given(phoneBookMock.removeRecordByName(name))
+                .willReturn(true);
 
         mockMvc.perform(delete("/v1/customers/deleteRecordByName/{name}", name))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    public void removePersonByNotExistedNameAndGetInternalErrorStatus() throws Exception {
+    public void removeRecordByNotExistedNameAndGetInternalErrorStatus() throws Exception {
         String name = "Alexa";
 
-        BDDMockito.given(phoneBookMock.removePersonByName(name))
+        BDDMockito.given(phoneBookMock.removeRecordByName(name))
                 .willThrow(new NoSuchDataException("No such data"));
 
         mockMvc.perform(delete("/v1/customers/deleteRecordByName/{name}", name))
