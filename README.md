@@ -10,7 +10,12 @@ Each phonebook record contains person's name and set of his phone numbers (set u
 4. Get list of phonebook records
 
 ## How to run
-#### Using Intellij IDEA configuration
+#### Using Intellij IDEA SpringBoot configuration
+1. Clone project
+2. Create "SpringBoot configuration" and add *com.griddynamics.gridu.springta.phonebook.PhoneBookApplication* as Main class
+3. Run created configuration
+
+#### Using Intellij IDEA Tomcat configuration
 1. Clone project
 2. Open IntelliJ IDEA and "Project structure" section. In artifact section create "Web Application: exploded" artifact from *phoneBookREST* module 
 3. Create Tomcat project configuration: 
@@ -51,6 +56,11 @@ where *phone* is query parameter.
 If record with such name not exists exception will be thrown
 4. To get all records send GET request on *http://localhost:8080/phoneBookREST/v1/customers/getAllRecords* \
 To get record by specific name send GET request on *http://localhost:8080/phoneBookREST/v1/customers/getRecordByName/PERSON_NAME*
+
+#### Swagger
+1. Run application
+2. Swagger will be on *http://localhost:8080/phoneBookREST/swagger-ui.html*
+
 
 ## Running test
 Application contains some service tests. 

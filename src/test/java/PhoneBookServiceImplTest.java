@@ -27,11 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.when;
 
-
 @WebMvcTest(PhoneBookController.class)
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {WebInitializer.class, AppConfig.class})
-@AutoConfigureMockMvc
 public class PhoneBookServiceImplTest {
 
     @Autowired
