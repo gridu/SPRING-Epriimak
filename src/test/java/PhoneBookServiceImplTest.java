@@ -3,12 +3,12 @@ import com.griddynamics.gridu.springta.phonebook.config.AppConfig;
 import com.griddynamics.gridu.springta.phonebook.config.WebInitializer;
 import com.griddynamics.gridu.springta.phonebook.controller.PhoneBookController;
 import com.griddynamics.gridu.springta.phonebook.exception.NoSuchDataException;
-import com.griddynamics.gridu.springta.phonebook.model.Record;
 import com.griddynamics.gridu.springta.phonebook.service.PhoneBookServiceImpl;
+import com.griddynamics.gridu.springta.phonebook.model.Record;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -25,10 +25,13 @@ import java.util.Map;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
 
+
+@WebMvcTest(PhoneBookController.class)
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {WebInitializer.class, AppConfig.class})
-@WebMvcTest(PhoneBookController.class)
+@AutoConfigureMockMvc
 public class PhoneBookServiceImplTest {
 
     @Autowired
@@ -43,8 +46,8 @@ public class PhoneBookServiceImplTest {
         data.add(new Record("Ann", "333-33-33"));
         data.add(new Record("Sam", "888-33-33"));
 
-        BDDMockito.given(phoneBookMock.findAllRecords())
-                .willReturn(data);
+        when(phoneBookMock.findAllRecords())
+                .thenReturn(data);
 
         mockMvc.perform(
                 get("/v1/customers/getAllRecords")
@@ -61,8 +64,8 @@ public class PhoneBookServiceImplTest {
         String phone = "555-55-55";
         Record record = new Record(name, phone);
 
-        BDDMockito.given(phoneBookMock.findRecordByName(name))
-                .willReturn(record);
+        when(phoneBookMock.findRecordByName(name))
+                .thenReturn(record);
 
         mockMvc.perform(
                 get("/v1/customers/getRecordByName/{name}", name)
@@ -77,8 +80,8 @@ public class PhoneBookServiceImplTest {
         String name = "Ann";
         Record emptyRecord = new Record();
 
-        BDDMockito.given(phoneBookMock.findRecordByName(name))
-                .willReturn(emptyRecord);
+       when(phoneBookMock.findRecordByName(name))
+                .thenReturn(emptyRecord);
 
         mockMvc.perform(
                 get("/v1/customers/getRecordByName/{name}", name)
@@ -98,8 +101,8 @@ public class PhoneBookServiceImplTest {
         body.put("name", name);
         body.put("phones", phone);
 
-        BDDMockito.given(phoneBookMock.addRecord(name, phone))
-                .willReturn(record);
+        when(phoneBookMock.addRecord(name, phone))
+                .thenReturn(record);
 
         mockMvc.perform(post("/v1/customers/addRecord")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -112,8 +115,8 @@ public class PhoneBookServiceImplTest {
     public void removeRecordByExistedNameAndGetOkStatus() throws Exception {
         String name = "Alexa";
 
-        BDDMockito.given(phoneBookMock.removeRecordByName(name))
-                .willReturn(true);
+        when(phoneBookMock.removeRecordByName(name))
+                .thenReturn(true);
 
         mockMvc.perform(delete("/v1/customers/deleteRecordByName/{name}", name))
                 .andExpect(status().is2xxSuccessful());
@@ -123,8 +126,8 @@ public class PhoneBookServiceImplTest {
     public void removeRecordByNotExistedNameAndGetInternalErrorStatus() throws Exception {
         String name = "Alexa";
 
-        BDDMockito.given(phoneBookMock.removeRecordByName(name))
-                .willThrow(new NoSuchDataException("No such data"));
+        when(phoneBookMock.removeRecordByName(name))
+                .thenThrow(new NoSuchDataException("No such data"));
 
         mockMvc.perform(delete("/v1/customers/deleteRecordByName/{name}", name))
                 .andExpect(status().is5xxServerError());

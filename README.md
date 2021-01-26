@@ -10,6 +10,7 @@ Each phonebook record contains person's name and set of his phone numbers (set u
 4. Get list of phonebook records
 
 ## How to run
+#### Using Intellij IDEA configuration
 1. Clone project
 2. Open IntelliJ IDEA and "Project structure" section. In artifact section create "Web Application: exploded" artifact from *phoneBookREST* module 
 3. Create Tomcat project configuration: 
@@ -17,6 +18,25 @@ Each phonebook record contains person's name and set of his phone numbers (set u
     * in "Development" section add same artifact and make sure Application context contains */phoneBookREST*
 4. Run tuned configuration
 5. Server starts, welcome message will be on *http://localhost:8080/phoneBookREST/v1/customers*
+
+#### Using Tomcat server
+1. Clone project
+2. Run ```mvn clean install``` \
+File *phoneBookREST.war* will be in *target* directory
+3. Go to Tomcat installed directory and start server: \
+```cd bin``` \
+```./startup.sh``` \
+Make sure you have credentials to manage apps \
+If not, add it in *conf/tomcat-users.xml*
+4. Open browser \
+Tomcat server will be in *localhost:8080*
+5. Deploy .war file 
+    * go to *http://localhost:8080/manager*
+    * in "Deploy" section select created .war file
+    * click "Deploy" button
+    * application is ready to use
+6. Shutdown Tomcat server after running application \
+```./shutdown.sh```
 
 ## How to use
 Make sure server is running on *localhost:8080*

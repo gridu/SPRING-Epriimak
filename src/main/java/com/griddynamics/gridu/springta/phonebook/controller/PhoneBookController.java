@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/v1/customers")
+@RequestMapping("v1/customers")
 public class PhoneBookController {
 
     private final PhoneBookService phoneBook;
